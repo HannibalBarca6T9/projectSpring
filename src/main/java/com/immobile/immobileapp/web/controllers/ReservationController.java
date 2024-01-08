@@ -17,6 +17,8 @@ import com.immobile.immobileapp.web.models.requests.ReservationForm;
 
 import jakarta.validation.Valid;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/reservation")
 public class ReservationController {
@@ -30,26 +32,27 @@ public class ReservationController {
     ArticlesServices articlesServices;
 
     @PostMapping("/create/{id}")
-    public String createArticle(@PathVariable Long id , @ModelAttribute Reservation reservation ) {
-
-
-
+    public String createArticle(@PathVariable Long id, @ModelAttribute Reservation reservation, Authentication authentication) {
 
         reservation.setDateDeVisite(reservation.getDateDeVisite());
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-
-
-
-//        reservation.setClientId( userDetailsService.loadUserByUsername(currentPrincipalName));
-
-
+        User user = userService.getUserByUsername(authentication.getName());
+        reservation.setClientId(user);
         reservation.setArticleId(articlesServices.getArticle(id));
-
-
         reservationServices.addReservation(reservation);
-
         return "redirect:/articles";
     }
+//        reservation.setDateDeVisite(reservation.getDateDeVisite());
+//
+//
+//        User user = userService.getUserByUsername(authentication.getName());
+//        reservation.setClientId(user);
+//
+//
+//
+//        reservation.setArticleId(articlesServices.getArticle(id));
+//
+//        reservationServices.addReservation(reservation);
+
+
+    //
 }

@@ -20,4 +20,6 @@ public interface UserServices {
     public Optional<User> getUsersByImmeubleId(User client);
 
     public void saveUser(User user);
+
+    User getUserByUsername(String name);
 }

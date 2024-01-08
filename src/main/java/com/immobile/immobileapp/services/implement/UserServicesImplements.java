@@ -1,8 +1,9 @@
 package com.immobile.immobileapp.services.implement;
 
-import java.util.*;
-
-import com.immobile.immobileapp.doa.entities.Roles;
+import com.immobile.immobileapp.doa.entities.User;
+import com.immobile.immobileapp.repesitory.UserRepesitory;
+import com.immobile.immobileapp.services.UserServices;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,11 +13,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.immobile.immobileapp.doa.entities.User;
-import com.immobile.immobileapp.repesitory.UserRepesitory;
-import com.immobile.immobileapp.services.UserServices;
-
-import lombok.RequiredArgsConstructor;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -65,6 +65,11 @@ public class UserServicesImplements implements UserServices, UserDetailsService 
         user.setPassword(encodedPasswod);
          userRepository.save(user);
 
+    }
+
+    @Override
+    public User getUserByUsername(String name) {
+        return userRepository.findByUsername(name);
     }
 
     @Override
